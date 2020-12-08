@@ -9,7 +9,7 @@ public class BackwardsString implements CharSequence {
     }
 
     public boolean isEmpty() {
-        return false;
+        return source.isEmpty();
     }
 
     @Override

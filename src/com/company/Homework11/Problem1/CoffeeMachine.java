@@ -1,12 +1,27 @@
 package com.company.Homework11.Problem1;
 
+import java.util.Random;
+
 public class CoffeeMachine {
 
     public static Drink makeDrink(Command command) {
-        if (command.getDrinkType() == DrinkType.TEA) {
-            return new Tea(command.getSugarCount());
+
+        StickType stickType;
+        if (command.getSugarCount() == 0) {
+            stickType = null;
         } else {
-            return new Coffee(command.getSugarCount());
+            Random random = new Random();
+            if (random.nextInt(2) == 0) {
+                stickType = StickType.PLASTIC;
+            } else {
+                stickType = StickType.WOODEN;
+            }
+        }
+
+        if (command.getDrinkType() == DrinkType.TEA) {
+            return new Tea(command.getSugarCount(), command.isIncludeMilk(),stickType);
+        } else {
+            return new Coffee(command.getSugarCount(), command.isIncludeMilk(),stickType);
         }
     }
 }

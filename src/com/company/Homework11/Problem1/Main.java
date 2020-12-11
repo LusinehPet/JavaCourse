@@ -11,8 +11,8 @@ public class Main {
 
 
         String[] array = commandAsString.split(":");
+
         String drinkAsString = array[0];
-        int sugarCount = Integer.parseInt(array[1]);
         DrinkType drinkType;
         if (drinkAsString.equals("T") || drinkAsString.equals("t")) {
             drinkType = DrinkType.TEA;
@@ -22,7 +22,20 @@ public class Main {
             System.out.println("Invalid drink type");
             return;
         }
-        Command command = new Command(drinkType, sugarCount);
+
+        String milkAsString = array[2];
+        boolean includeMilk;
+        if (milkAsString.equals("0")) {
+            includeMilk = false;
+        } else if (milkAsString.equals("1")) {
+           includeMilk = true;
+        } else {
+            System.out.println("Invalid argument for milk");
+            return;
+        }
+
+        int sugarCount = Integer.parseInt(array[1]);
+        Command command = new Command(drinkType, sugarCount, includeMilk);
         Drink drink = CoffeeMachine.makeDrink(command);
         System.out.println(drink);
     }

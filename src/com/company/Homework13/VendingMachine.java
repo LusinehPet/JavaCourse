@@ -7,14 +7,13 @@ import com.company.Homework13.products.drink.*;
 import com.company.Homework13.products.cigarette.*;
 import com.company.Homework13.products.candy.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import static com.company.Homework13.ProductName.*;
 
 public class VendingMachine {
 
-    private HashMap<String, ArrayList<Product>> products = new HashMap<>();
+    private HashMap<String, Queue<Product>> products = new HashMap<>();
     private ProductName[][] order = new ProductName[][]{
             {LAYS, PRINGLES, DORITOS, CHEETOS, OTMARTINA},
             {SNICKERS, MARS, RAFFAELLO, BOUNTY, KINDER},
@@ -34,7 +33,7 @@ public class VendingMachine {
                 String key = "" + i + j;
                 ProductName productName = order[i - 'A'][j - 1];
 
-                ArrayList<Product> products = new ArrayList<>();
+                Queue<Product> products = new PriorityQueue<>();
                 for (int k = 0; k < 10; k++) {
                     products.add(getProductFromName(productName));
                 }
@@ -80,14 +79,14 @@ public class VendingMachine {
 
     public ArrayList<Product> getProducts(Command command) {
         String key = "" + command.getProductRow() + command.getProductPlace();
-        ArrayList<Product> products = this.products.get(key);
+        Queue<Product> products = this.products.get(key);
 
         if (products.size() < command.getProductCount()) {
             return null;
         }
         ArrayList<Product> returnList = new ArrayList<>();
         for (int i = 0; i < command.getProductCount(); i++) {
-            returnList.add(products.remove(products.size() - 1));
+            returnList.add(products.poll());
         }
         return returnList;
     }
